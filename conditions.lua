@@ -3916,6 +3916,18 @@ do
 	local function MeleeCritChance(positionalParams, namedParams, state, atTime)
 		return SnapshotCritChance("meleeCrit", 0, positionalParams, namedParams, state, atTime)
 	end
+	
+	--- Get the current percent increase to melee haste of the player.
+	-- @name MeleeHaste
+	-- @paramsig number or boolean
+	-- @param operator Optional. Comparison operator: less, atMost, equal, atLeast, more.
+	-- @param number Optional. The number to compare against.
+	-- @return The current percent increase to melee haste.
+	-- @return A boolean value for the result of the comparison.
+
+	local function MeleeHaste(positionalParams, namedParams, state, atTime)
+		return Snapshot("meleeHaste", 0, positionalParams, namedParams, state, atTime)
+	end
 
 	--- Get the current multistrike chance of the player.
 	-- @name MultistrikeChance
@@ -4028,6 +4040,7 @@ do
 	OvaleCondition:RegisterCondition("masteryeffect", false, MasteryEffect)
 	OvaleCondition:RegisterCondition("masteryrating", false, MasteryRating)
 	OvaleCondition:RegisterCondition("meleecritchance", false, MeleeCritChance)
+	OvaleCondition:RegisterCondition("meleehaste", false, MeleeHaste)
 	OvaleCondition:RegisterCondition("multistrikechance", false, MultistrikeChance)
 	OvaleCondition:RegisterCondition("rangedcritchance", false, RangedCritChance)
 	OvaleCondition:RegisterCondition("spellcritchance", false, SpellCritChance)
@@ -5171,20 +5184,39 @@ do
 end
 
 do
-	--- Test with DBM or BigWigs whether a boss is currently engaged
+	--- Test with DBM or BigWigs (if available) whether a boss is currently engaged
+	--- otherwise test for known units and/or world boss
 	-- @name IsBossFight
 	-- @return A boolean value.
 	-- @usage
-	-- if IsBossFight() Spell(metamorphisis)
+	-- if IsBossFight() Spell(metamorphosis_havoc)
 	local function IsBossFight(positionalParams, namedParams, state, atTime)
-		if not OvaleBossMod:HasBossMod() then
-			-- we don't have a boss mod, assume we are in a boss fight anyway
-			return 0, INFINITY
-		end
-		
-		local bossEngaged = OvaleBossMod:HasBossMod() and OvaleBossMod:IsBossEngaged()
+		local bossEngaged = state.inCombat and OvaleBossMod:IsBossEngaged(state)
 		return TestBoolean(bossEngaged, "yes")
 	end
 	
 	OvaleCondition:RegisterCondition("isbossfight", false, IsBossFight)
+end
+
+do
+	--- Check for the target's race
+	-- @name Race
+	-- @param all the races you which to check for
+	-- @param target Optional. Sets the target to check. The target may also be given as a prefix to the condition.
+	--     Defaults to target=player.
+	--     Valid values: player, target, focus, pet.
+	-- @usage
+	-- if Race(blood_elf) Spell(arcane_torrent)
+	local function Race(positionalParams, namedParams, state, atTime)
+		local isRace = false
+		local target = namedParams.target or "player"
+		local _, targetRaceId = API_UnitRace(target)
+		
+		for _,v in ipairs(positionalParams) do
+			isRace = isRace or (v == raceId)
+		end
+		return TestBoolean(isRace, "yes")
+	end
+	
+	OvaleCondition:RegisterCondition("race", false, Race)
 end

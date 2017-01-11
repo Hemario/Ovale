@@ -1101,10 +1101,12 @@ local function InitializeDisambiguation()
 	AddDisambiguation("soul_reaper",			"soul_reaper_frost",			"DEATHKNIGHT",	"frost")
 	AddDisambiguation("soul_reaper",			"soul_reaper_unholy",			"DEATHKNIGHT",	"unholy")
 	-- Demon Hunter
-	AddDisambiguation("metamorphosis", 			"metamorphosis_veng", "DEMONHUNTER", "vengeance")
-	AddDisambiguation("metamorphosis_buff", 	"metamorphosis_veng_buff", "DEMONHUNTER", "vengeance")
-	AddDisambiguation("metamorphosis", 			"metamorphosis_havoc", "DEMONHUNTER", "havoc")
-	AddDisambiguation("metamorphosis_buff", 	"metamorphosis_havoc_buff", "DEMONHUNTER", "havoc")
+	AddDisambiguation("metamorphosis", 			"metamorphosis_veng", 			"DEMONHUNTER", "vengeance")
+	AddDisambiguation("metamorphosis_buff", 	"metamorphosis_veng_buff", 		"DEMONHUNTER", "vengeance")
+	AddDisambiguation("metamorphosis", 			"metamorphosis_havoc", 			"DEMONHUNTER", "havoc")
+	AddDisambiguation("metamorphosis_buff", 	"metamorphosis_havoc_buff", 	"DEMONHUNTER", "havoc")
+	AddDisambiguation("throw_glaive", 			"throw_glaive_veng", 			"DEMONHUNTER", "vengeance")
+	AddDisambiguation("throw_glaive", 			"throw_glaive_havoc", 			"DEMONHUNTER", "havoc")
 	-- Druid
 	AddDisambiguation("arcane_torrent",			"arcane_torrent_energy",		"DRUID")
 	AddDisambiguation("berserk",				"berserk_bear",					"DRUID",		"guardian")
@@ -1116,7 +1118,7 @@ local function InitializeDisambiguation()
 	AddDisambiguation("force_of_nature",		"force_of_nature_caster",		"DRUID",		"balance")
 	AddDisambiguation("force_of_nature",		"force_of_nature_melee",		"DRUID",		"feral")
 	AddDisambiguation("force_of_nature",		"force_of_nature_tank",			"DRUID",		"guardian")
-	AddDisambiguation("fury_of_elue", "fury_of_elune", "DRUID")
+	AddDisambiguation("fury_of_elue", 			"fury_of_elune", 				"DRUID")
 	AddDisambiguation("heart_of_the_wild",		"heart_of_the_wild_tank",		"DRUID",		"guardian")
 	AddDisambiguation("incarnation",			"incarnation_chosen_of_elune",	"DRUID",		"balance")
 	AddDisambiguation("incarnation",			"incarnation_king_of_the_jungle",	"DRUID",	"feral")
@@ -1125,12 +1127,13 @@ local function InitializeDisambiguation()
 	AddDisambiguation("legendary_ring",			"legendary_ring_bonus_armor",	"DRUID",		"guardian", "Item")
 	AddDisambiguation("legendary_ring",			"legendary_ring_intellect",		"DRUID",		"balance", "Item")
 	AddDisambiguation("legendary_ring",			"legendary_ring_spirit",		"DRUID",		"restoration", "Item")
-	AddDisambiguation("lunar_strike", "lunar_strike_balance", "DRUID", "balance")
+	AddDisambiguation("lunar_strike", 			"lunar_strike_balance", 		"DRUID", 		"balance")
 	AddDisambiguation("moonfire",				"moonfire_cat",					"DRUID",		"feral")
 	AddDisambiguation("omen_of_clarity",		"omen_of_clarity_melee",		"DRUID",		"feral")
 	AddDisambiguation("rejuvenation_debuff",	"rejuvenation_buff",			"DRUID")
 	AddDisambiguation("starsurge",				"starsurge_moonkin",			"DRUID",		"balance")
-	AddDisambiguation("frenzied_regeneration_debuff", "frenzied_regeneration_buff", "DRUID", "guardian")
+	AddDisambiguation("frenzied_regeneration_debuff", "frenzied_regeneration_buff", "DRUID", 	"guardian")
+	AddDisambiguation("thrash_debuff", 			"thrash_bear_debuff", 			"DRUID", 		"guardian")
 	-- Hunter
 	AddDisambiguation("arcane_torrent",			"arcane_torrent_focus",			"HUNTER")
 	AddDisambiguation("beast_cleave",			"pet_beast_cleave",				"HUNTER",		"beast_mastery")
@@ -1621,6 +1624,7 @@ local EmitOperandGlyph = nil
 local EmitOperandPet = nil
 local EmitOperandPreviousSpell = nil
 local EmitOperandRaidEvent = nil
+local EmitOperandRace = nil
 local EmitOperandRune = nil
 local EmitOperandSeal = nil
 local EmitOperandSetBonus = nil
@@ -2657,6 +2661,9 @@ EmitOperand = function(parseNode, nodeList, annotation, action)
 		ok, node = EmitOperandRaidEvent(operand, parseNode, nodeList, annotation, action)
 	end
 	if not ok then
+		ok, node = EmitOperandRace(operand, parseNode, nodeList, annotation, action)
+	end
+	if not ok then
 		ok, node = EmitOperandAction(operand, parseNode, nodeList, annotation, action, target)
 	end
 	if not ok then
@@ -3035,6 +3042,7 @@ do
 		["finality"]			= "HasArtifactTrait(finality)",
 		["focus"]				= "Focus()",
 		["focus.deficit"]		= "FocusDeficit()",
+		["focus.max"]			= "MaxFocus()",
 		["focus.regen"]			= "FocusRegenRate()",
 		["focus.time_to_max"]	= "TimeToMaxFocus()",
 		["frost.frac"]			= "Rune(frost)",
@@ -3071,6 +3079,7 @@ do
 		["solar_max"]			= "TimeToEclipse(solar)",	-- XXX
 		["soul_shard"]			= "SoulShards()",
 		["soul_fragments"]		= "BuffStacks(soul_fragments)",
+		["ssw_refund_offset"]	= "target.Range() % 3 - 1",
 		["stat.multistrike_pct"]= "MultistrikeChance()",
 		["stealthed"]			= "Stealthed()",
 		["stealthed.all"]		= "Stealthed()",
@@ -3159,6 +3168,8 @@ do
 			-- "spell_haste" is the player's spell factor, e.g.,
 			-- 25% haste corresponds to a "spell_haste" value of 1/(1 + 0.25) = 0.8.
 			code = "100 / { 100 + SpellHaste() }"
+		elseif operand == "attack_haste" or operand == "stat.attack_haste" then
+			code = "100 / { 100 + MeleeHaste() }"
 		elseif strsub(operand, 1, 13) == "spell_targets" then
 			-- "spell_target.<spell>" is roughly equivalent to the number of enemies.
 			code = "Enemies()"
@@ -3225,7 +3236,7 @@ EmitOperandCooldown = function(operand, parseNode, nodeList, annotation, action)
 				code = format("%sChargeCooldown(%s)", prefix, name)
 			end
 		elseif property == "charges_fractional" then
-			code = format("%sCharges(%s)", prefix, name)
+			code = format("%sCharges(%s count=0)", prefix, name)
 		else
 			ok = false
 		end
@@ -3482,7 +3493,7 @@ EmitOperandRaidEvent = function(operand, parseNode, nodeList, annotation, action
 			-- Pretend the next "movement" raid event is ten minutes from now.
 			code = "600"
 		elseif property == "distance" then
-			code = "0"
+			code = "target.Distance()"
 		elseif property == "exists" then
 			code = "False(raid_event_movement_exists)"
 		elseif property == "remains" then
@@ -3501,7 +3512,7 @@ EmitOperandRaidEvent = function(operand, parseNode, nodeList, annotation, action
 			code = "600"
 		elseif property == "count" then
 			code = "0"
-		elseif property == "exists" then
+		elseif property == "exists" or property == "up" then
 			code = "False(raid_event_adds_exists)"
 		elseif property == "in" then
 			-- Pretend the next "adds" raid event is ten minutes from now.
@@ -3515,6 +3526,37 @@ EmitOperandRaidEvent = function(operand, parseNode, nodeList, annotation, action
 	if ok and code then
 		annotation.astAnnotation = annotation.astAnnotation or {}
 		node = OvaleAST:ParseCode("expression", code, nodeList, annotation.astAnnotation)
+	end
+
+	return ok, node
+end
+
+EmitOperandRace = function(operand, parseNode, nodeList, annotation, action)
+	local ok = true
+	local node
+	
+	local tokenIterator = gmatch(operand, OPERAND_TOKEN_PATTERN)
+	local token = tokenIterator()
+	if token == "race" then
+		local race = strlower(tokenIterator())
+		local code
+		if race then
+			local raceId = nil
+			if(race == "blood_elf") then
+				raceId = "BloodElf"
+			else
+				self:Print("Warning: Race '%s' not defined", race)				
+			end
+			code = format("Race(%s)", raceId)
+		else
+			ok = false
+		end
+		if ok and code then
+			annotation.astAnnotation = annotation.astAnnotation or {}
+			node = OvaleAST:ParseCode("expression", code, nodeList, annotation.astAnnotation)
+		end
+	else
+		ok = false
 	end
 
 	return ok, node
@@ -3623,6 +3665,10 @@ EmitOperandSpecial = function(operand, parseNode, nodeList, annotation, action, 
 	if class == "DEATHKNIGHT" and operand == "dot.breath_of_sindragosa.ticking" then
 		-- Breath of Sindragosa is the player buff from channeling the spell.
 		local buffName = "breath_of_sindragosa_buff"
+		code = format("BuffPresent(%s)", buffName)
+		AddSymbol(annotation, buffName)
+	elseif class == "DEATHKNIGHT" and operand == "dot.hungering_rune_weapon.ticking" then
+		local buffName = "hungering_rune_weapon_buff"
 		code = format("BuffPresent(%s)", buffName)
 		AddSymbol(annotation, buffName)
 	elseif class == "DEATHKNIGHT" and strsub(operand, -9, -1) == ".ready_in" then
@@ -3784,6 +3830,9 @@ EmitOperandSpecial = function(operand, parseNode, nodeList, annotation, action, 
 		else
 			ok = false
 		end
+	elseif class == "WARLOCK" and strmatch(operand, "dot.unstable_affliction_([1-5]).remains") then
+		local num = strmatch(operand, "dot.unstable_affliction_([1-5]).remains")
+		code = format("target.DebuffCount(unstable_affliction_debuff) >= %s", num)
 	elseif class == "WARRIOR" and strsub(operand, 1, 23) == "buff.colossus_smash_up." then
 		local property = strsub(operand, 24)
 		local debuffName = "colossus_smash_debuff"
@@ -4251,7 +4300,11 @@ local function InsertSupportingFunctions(child, annotation)
 		local fmt = [[
 			AddFunction %sGetInMeleeRange
 			{
-				if CheckBoxOn(opt_melee_range) and not target.InRange(demons_bite) Texture(misc_arrowlup help=L(not_in_melee_range))
+				if CheckBoxOn(opt_melee_range) and not target.InRange(demons_bite) 
+				{
+					Spell(felblade)
+					Texture(misc_arrowlup help=L(not_in_melee_range))
+				}
 			}
 		]]
 		local code = format(fmt, camelSpecialization)
@@ -4285,6 +4338,7 @@ local function InsertSupportingFunctions(child, annotation)
 					if not target.Classification(worldboss) 
 					{
 						if target.Distance(less 8) Spell(arcane_torrent_dh)
+						if target.Distance(less 8) Spell(chaos_nova)
 						Spell(fel_eruption)
 						if target.CreatureType(Demon) Spell(imprison)
 					}
