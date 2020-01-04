@@ -231,12 +231,13 @@ export class OvaleActionBarClass {
                 }
             }
         }
+        this.keybind[slot] = this.GetKeyBinding(slot);
         if (this.action[slot]) {
-            this.debug.Debug("Mapping button %s to %s.", slot, this.action[slot]);
+            this.debug.Debug("Mapping button %s to %s (%s).", slot, this.action[slot], this.keybind[slot] || "<nil>");
         } else {
             this.debug.Debug("Clearing mapping for button %s.", slot);
         }
-        this.keybind[slot] = this.GetKeyBinding(slot);
+        
         this.profiler.StopProfiling("OvaleActionBar_UpdateActionSlot");
     }
     UpdateKeyBindings() {

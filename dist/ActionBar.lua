@@ -234,12 +234,12 @@ __exports.OvaleActionBarClass = __class(nil, {
                 end
             end
         end
+        self.keybind[slot] = self:GetKeyBinding(slot)
         if self.action[slot] then
-            self.debug:Debug("Mapping button %s to %s.", slot, self.action[slot])
+            self.debug:Debug("Mapping button %s to %s (%s).", slot, self.action[slot], self.keybind[slot] or "<nil>")
         else
             self.debug:Debug("Clearing mapping for button %s.", slot)
         end
-        self.keybind[slot] = self:GetKeyBinding(slot)
         self.profiler:StopProfiling("OvaleActionBar_UpdateActionSlot")
     end,
     UpdateKeyBindings = function(self)
