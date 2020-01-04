@@ -686,7 +686,6 @@ Define(selfless_healer 85804)
 Define(selfless_healer_buff 114250)
 	SpellInfo(selfless_healer_buff duration=15 max_stacks=3)
 
-	SpellInfo(seraphim cd=45)
 Define(seraphim_buff 152262)
 	SpellInfo(seraphim_buff duration=16)
 
