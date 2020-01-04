@@ -3,6 +3,7 @@ if not __exports then return end
 local __class = LibStub:GetLibrary("tslib").newClass
 local aceEvent = LibStub:GetLibrary("AceEvent-3.0", true)
 local tonumber = tonumber
+local GetSpellCharges = GetSpellCharges
 local GetSpellCount = GetSpellCount
 local IsSpellInRange = IsSpellInRange
 local IsUsableItem = IsUsableItem
@@ -21,6 +22,8 @@ __exports.OvaleSpellsClass = __class(nil, {
         self.OnInitialize = function()
             self.requirement:RegisterRequirement("spellcount_min", self.RequireSpellCountHandler)
             self.requirement:RegisterRequirement("spellcount_max", self.RequireSpellCountHandler)
+            self.requirement:RegisterRequirement("spellcharges_min", self.RequireSpellChargesHandler)
+            self.requirement:RegisterRequirement("spellcharges_max", self.RequireSpellChargesHandler)
         end
         self.OnDisable = function()
             self.requirement:UnregisterRequirement("spellcount_max")
@@ -37,6 +40,25 @@ __exports.OvaleSpellsClass = __class(nil, {
                 local count = tonumber(countString) or 1
                 local actualCount = self:GetSpellCount(spellId)
                 verified = (requirement == "spellcount_min" and count <= actualCount) or (requirement == "spellcount_max" and count >= actualCount)
+            else
+                self.ovale:OneTimeMessage("Warning: requirement '%s' is missing a count argument.", requirement)
+            end
+            return verified, requirement, index
+        end
+        self.RequireSpellChargesHandler = function(spellId, atTime, requirement, tokens, index, targetGUID)
+            local verified = false
+            local spellNumber
+            local countString
+            if index then
+                spellNumber = tokens[index]
+                index = index + 1
+                countString = tokens[index]
+                index = index + 1
+            end
+            if spellNumber and countString then
+                local count = tonumber(countString) or 0
+                local actualCount = self:GetSpellCharges(spellNumber)
+                verified = (requirement == "spellcharges_min" and count <= actualCount) or (requirement == "spellcharges_max" and count >= actualCount)
             else
                 self.ovale:OneTimeMessage("Warning: requirement '%s' is missing a count argument.", requirement)
             end
@@ -73,6 +95,11 @@ __exports.OvaleSpellsClass = __class(nil, {
             self.tracer:Debug("GetSpellCount: spellName=%s for spellId=%s ==> spellCount=%s", spellName, spellId, spellCount)
             return spellCount
         end
+    end,
+    GetSpellCharges = function(self, spellId)
+        local currentCharges, maxCharges, cooldownStart, cooldownDuration, chargeModRate = GetSpellCharges(spellId)
+        self.tracer:Debug("GetSpellCharges: spellId=%s ==> currentCharges=%s, maxCharges=%s, cooldownStart=%s, cooldownDuration=%s, chargeModRate=%s", spellId, currentCharges, maxCharges, cooldownStart, cooldownDuration, chargeModRate)
+        return currentCharges
     end,
     IsSpellInRange = function(self, spellId, unitId)
         local index, bookType = self.OvaleSpellBook:GetSpellBookIndex(spellId)

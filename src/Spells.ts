@@ -1,7 +1,7 @@
 import { Tokens, OvaleRequirement } from "./Requirement";
 import aceEvent, { AceEvent } from "@wowts/ace_event-3.0";
 import { tonumber } from "@wowts/lua";
-import { GetSpellCount, IsSpellInRange, IsUsableItem, IsUsableSpell, UnitIsFriend } from "@wowts/wow-mock";
+import { GetSpellCharges, GetSpellCount, IsSpellInRange, IsUsableItem, IsUsableSpell, UnitIsFriend } from "@wowts/wow-mock";
 import { OvaleSpellBookClass } from "./SpellBook";
 import { AceModule } from "@wowts/tsaddon";
 import { OvaleClass } from "./Ovale";
@@ -28,6 +28,8 @@ export class OvaleSpellsClass implements StateModule {
     private OnInitialize = (): void => {
         this.requirement.RegisterRequirement("spellcount_min", this.RequireSpellCountHandler);
         this.requirement.RegisterRequirement("spellcount_max", this.RequireSpellCountHandler);
+        this.requirement.RegisterRequirement("spellcharges_min", this.RequireSpellChargesHandler);
+        this.requirement.RegisterRequirement("spellcharges_max", this.RequireSpellChargesHandler);
     }
     private OnDisable = (): void => {
         this.requirement.UnregisterRequirement("spellcount_max");
@@ -62,6 +64,12 @@ export class OvaleSpellsClass implements StateModule {
             return spellCount;
         }
     }
+    
+    GetSpellCharges(spellId: number): number {
+        let currentCharges, maxCharges, cooldownStart, cooldownDuration, chargeModRate = GetSpellCharges(spellId)
+        this.tracer.Debug("GetSpellCharges: spellId=%s ==> currentCharges=%s, maxCharges=%s, cooldownStart=%s, cooldownDuration=%s, chargeModRate=%s", spellId, currentCharges, maxCharges, cooldownStart, cooldownDuration, chargeModRate);
+        return currentCharges;
+    }
 
     IsSpellInRange(spellId: number, unitId: string): boolean | undefined {
         let [index, bookType] = this.OvaleSpellBook.GetSpellBookIndex(spellId);
@@ -89,6 +97,26 @@ export class OvaleSpellsClass implements StateModule {
             let count = tonumber(countString) || 1;
             let actualCount = this.GetSpellCount(spellId);
             verified = (requirement == "spellcount_min" && count <= actualCount) || (requirement == "spellcount_max" && count >= actualCount);
+        } else {
+            this.ovale.OneTimeMessage("Warning: requirement '%s' is missing a count argument.", requirement);
+        }
+        return [verified, requirement, index];
+    }
+    
+    private RequireSpellChargesHandler = (spellId: number, atTime: number, requirement: string, tokens: Tokens, index: number, targetGUID: string):[boolean, string, number] => {
+        let verified = false;
+        let spellNumber: number;
+        let countString: string;
+        if (index) {
+            spellNumber = <number>tokens[index];
+            index = index + 1;
+            countString = <string>tokens[index];
+            index = index + 1;
+        }
+        if (spellNumber && countString) {
+            let count = tonumber(countString) || 0;
+            let actualCount = this.GetSpellCharges(spellNumber);
+            verified = (requirement == "spellcharges_min" && count <= actualCount) || (requirement == "spellcharges_max" && count >= actualCount);
         } else {
             this.ovale.OneTimeMessage("Warning: requirement '%s' is missing a count argument.", requirement);
         }
