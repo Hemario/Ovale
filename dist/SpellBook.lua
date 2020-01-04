@@ -300,6 +300,9 @@ __exports.OvaleSpellBookClass = __class(nil, {
         return (talentId and self.talentPoints[talentId]) and true or false
     end,
     getKnownSpellId = function(self, spell)
+        if spell == nil then
+            return nil
+        end
         if isNumber(spell) then
             return spell
         end

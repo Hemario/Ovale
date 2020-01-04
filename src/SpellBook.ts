@@ -287,6 +287,7 @@ export class OvaleSpellBookClass {
     }
 
     getKnownSpellId(spell: number | string) {
+        if (spell == undefined) return undefined;
         if (isNumber(spell)) return spell;
         const spells = this.ovaleData.buffSpellList[spell];
         if (!spells) {
