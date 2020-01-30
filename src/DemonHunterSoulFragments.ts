@@ -6,6 +6,7 @@ import { AceModule } from "@wowts/tsaddon";
 import { OvaleClass } from "./Ovale";
 
 let SOUL_FRAGMENTS_BUFF_ID = 203981;
+let METAMORPHOSIS_BUFF_ID = 187827;
 let SOUL_FRAGMENT_SPELLS:LuaArray<number> = {
     [225919]: 2,    // Fracture
     [203782]: 1,    // Shear
@@ -42,7 +43,12 @@ export class OvaleDemonHunterSoulFragmentsClass {
         let me = this.ovale.playerGUID;
         if (sourceGUID == me) {
             if (subtype == "SPELL_CAST_SUCCESS" && SOUL_FRAGMENT_SPELLS[spellID]) {
-                this.AddPredictedSoulFragments(GetTime(), SOUL_FRAGMENT_SPELLS[spellID]);
+                let getTime = GetTime()
+                let fragments = SOUL_FRAGMENT_SPELLS[spellID];
+                if (fragments > 0 && this.HasMetamorphosis(getTime)) {
+                    fragments = fragments + 1;
+                }
+                this.AddPredictedSoulFragments(getTime, fragments);
             }
             if (subtype == "SPELL_CAST_SUCCESS" && SOUL_FRAGMENT_FINISHERS[spellID]) {
                 this.SetPredictedSoulFragment(GetTime(), 0);
@@ -74,5 +80,9 @@ export class OvaleDemonHunterSoulFragmentsClass {
         let aura = this.ovaleAura.GetAura("player", SOUL_FRAGMENTS_BUFF_ID, atTime, "HELPFUL", true);
         let stacks = this.ovaleAura.IsActiveAura(aura, atTime) && aura.stacks || 0;
         return stacks;
+    }
+    HasMetamorphosis(atTime: number) {
+        let aura = this.ovaleAura.GetAura("player", METAMORPHOSIS_BUFF_ID, atTime, "HELPFUL", true);
+        return this.ovaleAura.IsActiveAura(aura, atTime) || false;
     }
 }

@@ -5,6 +5,7 @@ local aceEvent = LibStub:GetLibrary("AceEvent-3.0", true)
 local GetTime = GetTime
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local SOUL_FRAGMENTS_BUFF_ID = 203981
+local METAMORPHOSIS_BUFF_ID = 187827
 local SOUL_FRAGMENT_SPELLS = {
     [225919] = 2,
     [203782] = 1,
@@ -33,7 +34,12 @@ __exports.OvaleDemonHunterSoulFragmentsClass = __class(nil, {
             local me = self.ovale.playerGUID
             if sourceGUID == me then
                 if subtype == "SPELL_CAST_SUCCESS" and SOUL_FRAGMENT_SPELLS[spellID] then
-                    self:AddPredictedSoulFragments(GetTime(), SOUL_FRAGMENT_SPELLS[spellID])
+                    local getTime = GetTime()
+                    local fragments = SOUL_FRAGMENT_SPELLS[spellID]
+                    if fragments > 0 and self:HasMetamorphosis(getTime) then
+                        fragments = fragments + 1
+                    end
+                    self:AddPredictedSoulFragments(getTime, fragments)
                 end
                 if subtype == "SPELL_CAST_SUCCESS" and SOUL_FRAGMENT_FINISHERS[spellID] then
                     self:SetPredictedSoulFragment(GetTime(), 0)
@@ -66,5 +72,9 @@ __exports.OvaleDemonHunterSoulFragmentsClass = __class(nil, {
         local aura = self.ovaleAura:GetAura("player", SOUL_FRAGMENTS_BUFF_ID, atTime, "HELPFUL", true)
         local stacks = self.ovaleAura:IsActiveAura(aura, atTime) and aura.stacks or 0
         return stacks
+    end,
+    HasMetamorphosis = function(self, atTime)
+        local aura = self.ovaleAura:GetAura("player", METAMORPHOSIS_BUFF_ID, atTime, "HELPFUL", true)
+        return self.ovaleAura:IsActiveAura(aura, atTime) or false
     end,
 })
