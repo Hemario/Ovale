@@ -509,7 +509,7 @@ Define(soul_fragments 203981)
 Define(spectral_sight 188501)
 	SpellInfo(spectral_sight cd=30)
 
-	SpellRequire(spirit_bomb unusable 1=buff,!soul_fragments)
+	SpellRequire(spirit_bomb unusable 1=soulfragments_max,0)
 	SpellAddBuff(spirit_bomb soul_fragments=0)
 	SpellAddTargetDebuff(spirit_bomb frailty_debuff=1)
 Define(thirsting_blades_buff 278736)

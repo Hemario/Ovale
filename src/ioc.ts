@@ -134,7 +134,7 @@ export class IoC {
         this.state = new OvaleStateClass();
         this.aura = new OvaleAuraClass(this.state, this.paperDoll, this.baseState, this.data, this.guid, this.lastSpell, this.options, this.debug, this.ovale, this.profiler, this.spellBook, this.requirement);
         this.stance = new OvaleStanceClass(this.debug, this.ovale, this.profiler, this.data, this.requirement);
-        this.demonHunterSoulFragments = new OvaleDemonHunterSoulFragmentsClass(this.aura, this.ovale);
+        this.demonHunterSoulFragments = new OvaleDemonHunterSoulFragmentsClass(this.aura, this.ovale, this.requirement);
         this.enemies = new OvaleEnemiesClass(this.guid, this.ovale, this.profiler, this.debug);
         this.future = new OvaleFutureClass(this.data, this.aura, this.paperDoll, this.baseState, this.cooldown, this.state, this.guid, this.lastSpell, this.ovale, this.debug, this.profiler, this.stance, this.requirement, this.spellBook);
         this.health = new OvaleHealthClass(this.guid, this.baseState, this.ovale, this.options, this.debug, this.profiler, this.requirement);
@@ -156,7 +156,6 @@ export class IoC {
         this.artifact = new OvaleArtifactClass(this.debug);
         this.damageTaken = new OvaleDamageTakenClass(this.ovale, this.profiler, this.debug);
         this.spellDamage = new OvaleSpellDamageClass(this.ovale, this.profiler);
-        this.demonHunterSoulFragments = new OvaleDemonHunterSoulFragmentsClass(this.aura, this.ovale);
         this.runes = new OvaleRunesClass(this.ovale, this.debug, this.profiler, this.data, this.power, this.paperDoll);
         this.actionBar = new OvaleActionBarClass(this.debug, this.ovale, this.profiler, this.spellBook);
         this.spells = new OvaleSpellsClass(this.spellBook, this.ovale, this.debug, this.profiler, this.data, this.requirement);
