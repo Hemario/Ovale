@@ -413,8 +413,6 @@ __exports.Emiter = __class(nil, {
                     annotation[action] = className
                     annotation.opt_touch_of_death_on_elite_only = "MONK"
                     self:AddSymbol(annotation, "hidden_masters_forbidden_touch_buff")
-                elseif className == "MONK" and action == "whirling_dragon_punch" then
-                    conditionCode = "SpellCooldown(fists_of_fury)>0 and SpellCooldown(rising_sun_kick)>0"
                 elseif className == "PALADIN" and action == "judgment" then
                     if modifiers.cycle_targets then
                         self:AddSymbol(annotation, action)

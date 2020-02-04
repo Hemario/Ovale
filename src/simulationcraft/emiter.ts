@@ -655,8 +655,6 @@ export class Emiter {
                 annotation[action] = className;
                 annotation.opt_touch_of_death_on_elite_only = "MONK";
                 this.AddSymbol(annotation, "hidden_masters_forbidden_touch_buff");
-            } else if (className == "MONK" && action == "whirling_dragon_punch") {
-                conditionCode = "SpellCooldown(fists_of_fury)>0 and SpellCooldown(rising_sun_kick)>0";
             } else if (className == "PALADIN" && action == "judgment") {
                 if (modifiers.cycle_targets) {
                     this.AddSymbol(annotation, action);

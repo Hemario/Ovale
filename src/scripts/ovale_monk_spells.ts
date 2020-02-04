@@ -592,9 +592,9 @@ Define(transcendence_transfer 119996)
 Define(vivify 116670)
 	SpellAddBuff(vivify thunder_focus_tea_buff=-1 if_spell=thunder_focus_tea)
 
-SpellInfo(whirling_dragon_punch unusable=1 cd_haste=melee)
-SpellRequire(whirling_dragon_punch unusable 0=oncooldown,rising_sun_kick)
-SpellRequire(whirling_dragon_punch unusable 0=oncooldown,fists_of_fury)
+SpellInfo(whirling_dragon_punch cd_haste=melee)
+SpellRequire(whirling_dragon_punch unusable 1=oncooldown,!rising_sun_kick)
+SpellRequire(whirling_dragon_punch unusable 1=oncooldown,!fists_of_fury)
 
 Define(zen_meditation 115176)
 	SpellInfo(zen_meditation cd=300 gcd=0 offgcd=1)
