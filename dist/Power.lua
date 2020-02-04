@@ -336,6 +336,9 @@ __exports.OvalePowerClass = __class(States, {
         self.profiler:StopProfiling("OvalePower_UpdatePowerType")
     end,
     GetSpellCost = function(self, spell, powerType)
+        if spell == nil then
+            return nil, nil
+        end
         local spellId = self.ovaleSpellBook:getKnownSpellId(spell)
         if spellId then
             local spellPowerCosts = GetSpellPowerCost(spellId)

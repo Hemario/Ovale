@@ -342,6 +342,7 @@ export class OvalePowerClass extends States<PowerState> implements StateModule {
         this.profiler.StopProfiling("OvalePower_UpdatePowerType");
     }
     GetSpellCost(spell: number | string, powerType?: PowerType): [number, PowerType] {
+        if (spell == undefined) { return [undefined, undefined]; } 
         const spellId = this.ovaleSpellBook.getKnownSpellId(spell);
         if (spellId) {
             const spellPowerCosts = GetSpellPowerCost(spellId);
