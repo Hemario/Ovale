@@ -214,7 +214,7 @@ Define(quaking_palm 107079)
   SpellInfo(quaking_palm cd=120 duration=4 gcd=1)
   # Incapacitated.
   SpellAddTargetDebuff(quaking_palm quaking_palm=1)
-Define(reverse_harm 290461)
+Define(reverse_harm 287771)
 # Heals a friendly target for m1 of their maximum health, and causes m2 of the amount healed to instantly be dealt to the nearest enemy as Nature damage within 5 yards. rnrn|cFFFFFFFFGenerates s3 Chi.
   SpellInfo(reverse_harm gcd=0 offgcd=1)
 Define(rising_sun_kick 107428)
