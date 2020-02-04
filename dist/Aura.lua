@@ -1148,7 +1148,7 @@ __exports.OvaleAuraClass = __class(States, {
                         else
                             aura = self:AddAuraToGUID(guid, auraId, auraFound.source, filter, nil, 0, huge, atTime)
                             for k, v in kpairs(auraFound) do
-                                aura[k] = v
+                                (aura)[k] = v
                             end
                             aura.serial = self.next.auraSerial
                             self.debug:Log("Aura %d is copied into simulator.", auraId)
@@ -1280,7 +1280,7 @@ __exports.OvaleAuraClass = __class(States, {
             else
                 aura = self:AddAuraToGUID(guid, auraId, auraFound.source, filter, nil, 0, huge, atTime)
                 for k, v in kpairs(auraFound) do
-                    aura[k] = v
+                    (aura)[k] = v
                 end
                 aura.serial = self.next.auraSerial
             end

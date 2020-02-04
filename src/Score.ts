@@ -111,7 +111,7 @@ export class OvaleScoreClass {
         }
     }
 
-    UNIT_SPELLCAST_START = (event: string, unitId: string, lineId: number, spellId: number) => {
+    UNIT_SPELLCAST_START = (event: string, unitId: string, lineId: string, spellId: number) => {
         if (unitId == "player" || unitId == "pet") {
             let now = GetTime();
             let spell = this.ovaleSpellBook.GetSpellName(spellId);

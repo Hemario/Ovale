@@ -110,7 +110,7 @@ export class OvaleSimulationCraftClass {
                 if (type(value) == "table") {
                     wipe(value);
                 }
-                annotation[key] = undefined;
+                delete annotation[key];
             }
             profile.annotation = undefined;
         }

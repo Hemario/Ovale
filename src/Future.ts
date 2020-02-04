@@ -407,7 +407,7 @@ export class OvaleFutureClass extends States<OvaleFutureData> {
             this.profiler.StopProfiling("OvaleFuture_UNIT_SPELLCAST_CHANNEL_UPDATE");
         }
     }
-    private UNIT_SPELLCAST_DELAYED = (event: string, unitId: string, lineId: number, spellId: number) => {
+    private UNIT_SPELLCAST_DELAYED = (event: string, unitId: string, lineId: string, spellId: number) => {
         if ((unitId == "player" || unitId == "pet") && !WHITE_ATTACK[spellId]) {
             let spell = this.ovaleSpellBook.GetSpellName(spellId);
             this.profiler.StartProfiling("OvaleFuture_UNIT_SPELLCAST_DELAYED");
@@ -479,7 +479,7 @@ export class OvaleFutureClass extends States<OvaleFutureData> {
             this.profiler.StopProfiling("OvaleFuture_UNIT_SPELLCAST_SENT");
         }
     }
-    private UNIT_SPELLCAST_START = (event: string, unitId: string, lineId: number, spellId: number) => {
+    private UNIT_SPELLCAST_START = (event: string, unitId: string, lineId: string, spellId: number) => {
         if ((unitId == "player" || unitId == "pet") && !WHITE_ATTACK[spellId]) {
             let spell = this.ovaleSpellBook.GetSpellName(spellId);
             this.profiler.StartProfiling("OvaleFuture_UNIT_SPELLCAST_START");

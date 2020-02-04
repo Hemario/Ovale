@@ -76,7 +76,7 @@ export class OvaleTotemClass extends States<TotemData> implements StateModule {
     CleanState() {
         for (const [slot, totem] of pairs(this.next.totems)) {
             for (const [k] of kpairs(totem)) {
-                totem[k] = undefined;
+                delete totem[k];
             }
             this.next.totems[slot] = undefined;
         }

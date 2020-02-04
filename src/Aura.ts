@@ -1230,7 +1230,7 @@ export class OvaleAuraClass extends States<AuraInterface> {
                         } else {
                             aura = this.AddAuraToGUID(guid, auraId, auraFound.source, filter, undefined, 0, huge, atTime);
                             for (const [k, v] of kpairs(auraFound)) {
-                                aura[k] = v;
+                                (<any>aura)[k] = v;
                             }
                             aura.serial = this.next.auraSerial;
                             this.debug.Log("Aura %d is copied into simulator.", auraId);
@@ -1363,7 +1363,7 @@ export class OvaleAuraClass extends States<AuraInterface> {
             } else {
                 aura = this.AddAuraToGUID(guid, auraId, auraFound.source, filter, undefined, 0, huge, atTime);
                 for (const [k, v] of kpairs(auraFound)) {
-                    aura[k] = v;
+                    (<any>aura)[k] = v;
                 }
                 aura.serial = this.next.auraSerial;
             }
