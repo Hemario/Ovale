@@ -657,8 +657,6 @@ export class Emiter {
                 this.AddSymbol(annotation, "hidden_masters_forbidden_touch_buff");
             } else if (className == "MONK" && action == "whirling_dragon_punch") {
                 conditionCode = "SpellCooldown(fists_of_fury)>0 and SpellCooldown(rising_sun_kick)>0";
-            } else if (className == "PALADIN" && action == "blessing_of_kings") {
-                conditionCode = "BuffExpires(mastery_buff)";
             } else if (className == "PALADIN" && action == "judgment") {
                 if (modifiers.cycle_targets) {
                     this.AddSymbol(annotation, action);
