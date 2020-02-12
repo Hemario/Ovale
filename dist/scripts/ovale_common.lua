@@ -105,12 +105,16 @@ Define(edits_of_the_faithless 169315)
     ItemInfo(edits_of_the_faithless unusable=1)
 Define(gnawed_thumb_ring 134526)
 	ItemInfo(gnawed_thumb_ring cd=180)
+Define(humming_black_dragonscale 174044)
+    ItemInfo(humming_black_dragonscale unusable=1)
 Define(nightwell_energy_buff 214572)
 Define(shifting_cosmic_sliver 147026)
 Define(specter_of_betrayal 151190)
 Define(ring_of_collapsing_futures 142173)
 	ItemInfo(ring_of_collapsing_futures cd=15)
 	Define(temptation_buff 234143)
+    
+
 
 ###
 ### Legendary Meta Gem
