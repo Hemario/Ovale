@@ -566,10 +566,12 @@ Define(teachings_of_the_monastery_buff 202090)
 	SpellInfo(teachings_of_the_monastery_buff duration=12 max_stacks=3)
 
 Define(thunder_focus_tea 116680)
-	SpellInfo(thunder_focus_tea cd=30 gcd=0 offgcd=1 duration=3)
+	SpellInfo(thunder_focus_tea cd=30 gcd=0 offgcd=1)
 	SpellAddBuff(thunder_focus_tea thunder_focus_tea=1)
 	SpellAddBuff(thunder_focus_tea thunder_focus_tea=2 talent=focused_thunder_talent)
-
+Define(thunder_focus_tea_buff 116680)
+    SpellInfo(thunder_focus_tea_buff duration=30)
+    
 SpellInfo(tiger_palm energy=50 specialization=windwalker)
 SpellInfo(tiger_palm energy=25 specialization=brewmaster)
 SpellAddBuff(tiger_palm teachings_of_the_monastery_buff=1 specialization=mistweaver)

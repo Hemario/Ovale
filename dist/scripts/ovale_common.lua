@@ -113,8 +113,6 @@ Define(specter_of_betrayal 151190)
 Define(ring_of_collapsing_futures 142173)
 	ItemInfo(ring_of_collapsing_futures cd=15)
 	Define(temptation_buff 234143)
-    
-
 
 ###
 ### Legendary Meta Gem
