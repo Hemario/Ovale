@@ -488,7 +488,7 @@ Define(brain_freeze_buff 190446)
 
 Define(cinderstorm 198929)
 	SpellInfo(cinderstorm cd=9)
-Define(clearcasting_buff 276743)
+Define(clearcasting_buff 263725)
     SpellInfo(clearcasting_buff duration=15 max_stacks=3)
 Define(cold_snap 11958)
 	SpellInfo(cold_snap cd=180 gcd=0 offgcd=1)
