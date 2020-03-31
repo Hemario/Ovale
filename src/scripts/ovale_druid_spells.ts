@@ -652,7 +652,6 @@ Define(moonkin_form 197625)
 	SpellInfo(moonkin_form to_stance=druid_moonkin_form)
 	SpellInfo(moonkin_form unusable=1 if_stance=druid_moonkin_form)
 
-Define(solar_wrath 190984)
 Define(starsurge 197626)
 	SpellInfo(starsurge cd=10 specialization=!balance)
 Define(sunfire_debuff 164815)
