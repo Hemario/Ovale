@@ -675,7 +675,7 @@ Define(flame_shock_debuff 188389)
 	SpellInfo(flame_shock_debuff duration=18 haste=spell tick=2)
 
 	SpellInfo(flame_shock_restoration cd=6)
-Define(flame_shock_restoration_debuff 188389)
+Define(flame_shock_restoration_debuff 188838)
 	SpellInfo(flame_shock_restoration_debuff duration=21 haste=spell tick=3)
 
 	SpellInfo(flametongue cd=12 cd_haste=melee)
