@@ -3093,7 +3093,7 @@ l    */
         let count = namedParams.count;
         let boolean;
         if (count && count > 1) {
-            boolean = (spellId == this.OvaleFuture.next.lastGCDSpellIds[lualength(this.OvaleFuture.next.lastGCDSpellIds) - count + 2]);
+            boolean = (spellId == this.OvaleFuture.next.lastGCDSpellIds[lualength(this.OvaleFuture.next.lastGCDSpellIds) - count + 1]);
         } else {
             boolean = (spellId == this.OvaleFuture.next.lastGCDSpellId);
         }

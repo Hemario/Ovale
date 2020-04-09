@@ -1387,7 +1387,7 @@ __exports.OvaleConditions = __class(nil, {
             local count = namedParams.count
             local boolean
             if count and count > 1 then
-                boolean = (spellId == self.OvaleFuture.next.lastGCDSpellIds[#self.OvaleFuture.next.lastGCDSpellIds - count + 2])
+                boolean = (spellId == self.OvaleFuture.next.lastGCDSpellIds[#self.OvaleFuture.next.lastGCDSpellIds - count + 1])
             else
                 boolean = (spellId == self.OvaleFuture.next.lastGCDSpellId)
             end
