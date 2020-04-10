@@ -171,6 +171,8 @@ Define(hyperthread_wristwraps_300142 300142)
 
 Define(anima_of_death_essence 294926)
     SpellInfo(anima_of_death_essence tag=cd)
+Define(breath_of_the_dying_essence 310690)
+    SpellInfo(breath_of_the_dying_essence tag=main cd=45)
 Define(concentrated_flame_essence 295373)
     SpellInfo(concentrated_flame_essence cd=30 tag=main)
     Define(concentrated_flame_burn_debuff 295368)
