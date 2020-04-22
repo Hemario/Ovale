@@ -186,7 +186,7 @@ AddFunction AssassinationPrecombatCdPostConditions
 AddFunction AssassinationEssencesMainActions
 {
  #concentrated_flame,if=energy.time_to_max>1&!debuff.vendetta.up&(!dot.concentrated_flame_burn.ticking&!action.concentrated_flame.in_flight|full_recharge_time<gcd.max)
- if TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } Spell(concentrated_flame_essence)
+ if TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } Spell(concentrated_flame_essence)
 }
 
 AddFunction AssassinationEssencesMainPostConditions
@@ -195,7 +195,7 @@ AddFunction AssassinationEssencesMainPostConditions
 
 AddFunction AssassinationEssencesShortCdActions
 {
- unless TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ unless TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
  {
   #purifying_blast,if=spell_targets.fan_of_knives>=2|raid_event.adds.in>60
   if Enemies() >= 2 or 600 > 60 Spell(purifying_blast)
@@ -210,12 +210,12 @@ AddFunction AssassinationEssencesShortCdActions
 
 AddFunction AssassinationEssencesShortCdPostConditions
 {
- TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
 }
 
 AddFunction AssassinationEssencesCdActions
 {
- unless TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ unless TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
  {
   #blood_of_the_enemy,if=debuff.vendetta.up&(!talent.toxic_blade.enabled|debuff.toxic_blade.up&combo_points.deficit<=1|debuff.vendetta.remains<=10)|target.time_to_die<=10
   if target.DebuffPresent(vendetta_debuff) and { not Talent(toxic_blade_talent) or target.DebuffPresent(toxic_blade_debuff) and ComboPointsDeficit() <= 1 or target.DebuffRemaining(vendetta_debuff) <= 10 } or target.TimeToDie() <= 10 Spell(blood_of_the_enemy)
@@ -236,7 +236,7 @@ AddFunction AssassinationEssencesCdActions
 
 AddFunction AssassinationEssencesCdPostConditions
 {
- TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence) or { Enemies() >= 2 or 600 > 60 } and Spell(purifying_blast) or { BuffPresent(reckless_force_buff) or BuffStacks(reckless_force_counter_buff) < 10 } and Spell(the_unbound_force) or Spell(ripple_in_space_essence) or BuffStacks(lifeblood_buff) < 3 and Spell(worldvein_resonance_essence)
+ TimeToMaxEnergy() > 1 and not target.DebuffPresent(vendetta_debuff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence) or { Enemies() >= 2 or 600 > 60 } and Spell(purifying_blast) or { BuffPresent(reckless_force_buff) or BuffStacks(reckless_force_counter_buff) < 10 } and Spell(the_unbound_force) or Spell(ripple_in_space_essence) or BuffStacks(lifeblood_buff) < 3 and Spell(worldvein_resonance_essence)
 }
 
 ### actions.dot
@@ -896,7 +896,7 @@ AddFunction OutlawFinishCdPostConditions
 AddFunction OutlawEssencesMainActions
 {
  #concentrated_flame,if=energy.time_to_max>1&!buff.blade_flurry.up&(!dot.concentrated_flame_burn.ticking&!action.concentrated_flame.in_flight|full_recharge_time<gcd.max)
- if TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } Spell(concentrated_flame_essence)
+ if TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } Spell(concentrated_flame_essence)
 }
 
 AddFunction OutlawEssencesMainPostConditions
@@ -905,7 +905,7 @@ AddFunction OutlawEssencesMainPostConditions
 
 AddFunction OutlawEssencesShortCdActions
 {
- unless TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ unless TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
  {
   #purifying_blast,if=spell_targets.blade_flurry>=2|raid_event.adds.in>60
   if Enemies() >= 2 or 600 > 60 Spell(purifying_blast)
@@ -920,12 +920,12 @@ AddFunction OutlawEssencesShortCdActions
 
 AddFunction OutlawEssencesShortCdPostConditions
 {
- TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
 }
 
 AddFunction OutlawEssencesCdActions
 {
- unless TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ unless TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
  {
   #blood_of_the_enemy,if=variable.blade_flurry_sync&cooldown.between_the_eyes.up&variable.bte_condition
   if blade_flurry_sync() and not SpellCooldown(between_the_eyes) > 0 and bte_condition() Spell(blood_of_the_enemy)
@@ -944,7 +944,7 @@ AddFunction OutlawEssencesCdActions
 
 AddFunction OutlawEssencesCdPostConditions
 {
- TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence) or { Enemies() >= 2 or 600 > 60 } and Spell(purifying_blast) or { BuffPresent(reckless_force_buff) or BuffStacks(reckless_force_counter_buff) < 10 } and Spell(the_unbound_force) or Spell(ripple_in_space_essence) or BuffStacks(lifeblood_buff) < 3 and Spell(worldvein_resonance_essence)
+ TimeToMaxEnergy() > 1 and not BuffPresent(blade_flurry_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence) or { Enemies() >= 2 or 600 > 60 } and Spell(purifying_blast) or { BuffPresent(reckless_force_buff) or BuffStacks(reckless_force_counter_buff) < 10 } and Spell(the_unbound_force) or Spell(ripple_in_space_essence) or BuffStacks(lifeblood_buff) < 3 and Spell(worldvein_resonance_essence)
 }
 
 ### actions.cds
@@ -1651,7 +1651,7 @@ AddFunction SubtletyFinishCdPostConditions
 AddFunction SubtletyEssencesMainActions
 {
  #concentrated_flame,if=energy.time_to_max>1&!buff.symbols_of_death.up&(!dot.concentrated_flame_burn.ticking&!action.concentrated_flame.in_flight|full_recharge_time<gcd.max)
- if TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } Spell(concentrated_flame_essence)
+ if TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } Spell(concentrated_flame_essence)
 }
 
 AddFunction SubtletyEssencesMainPostConditions
@@ -1660,7 +1660,7 @@ AddFunction SubtletyEssencesMainPostConditions
 
 AddFunction SubtletyEssencesShortCdActions
 {
- unless TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ unless TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
  {
   #purifying_blast,if=spell_targets.shuriken_storm>=2|raid_event.adds.in>60
   if Enemies() >= 2 or 600 > 60 Spell(purifying_blast)
@@ -1680,7 +1680,7 @@ AddFunction SubtletyEssencesShortCdPostConditions
 
 AddFunction SubtletyEssencesCdActions
 {
- unless TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence)
+ unless TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence)
  {
   #blood_of_the_enemy,if=cooldown.symbols_of_death.up|target.time_to_die<=10
   if not SpellCooldown(symbols_of_death) > 0 or target.TimeToDie() <= 10 Spell(blood_of_the_enemy)
@@ -1699,7 +1699,7 @@ AddFunction SubtletyEssencesCdActions
 
 AddFunction SubtletyEssencesCdPostConditions
 {
- TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) and not InFlightToTarget(concentrated_flame_essence) or SpellFullRecharge(concentrated_flame_essence) < GCD() } and Spell(concentrated_flame_essence) or { Enemies() >= 2 or 600 > 60 } and Spell(purifying_blast) or { BuffPresent(reckless_force_buff) or BuffStacks(reckless_force_counter_buff) < 10 } and Spell(the_unbound_force) or Spell(ripple_in_space_essence) or BuffStacks(lifeblood_buff) < 3 and Spell(worldvein_resonance_essence)
+ TimeToMaxEnergy() > 1 and not BuffPresent(symbols_of_death_buff) and { not target.DebuffPresent(concentrated_flame_burn_debuff) } and Spell(concentrated_flame_essence) or { Enemies() >= 2 or 600 > 60 } and Spell(purifying_blast) or { BuffPresent(reckless_force_buff) or BuffStacks(reckless_force_counter_buff) < 10 } and Spell(the_unbound_force) or Spell(ripple_in_space_essence) or BuffStacks(lifeblood_buff) < 3 and Spell(worldvein_resonance_essence)
 }
 
 ### actions.cds
