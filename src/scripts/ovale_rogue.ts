@@ -812,9 +812,9 @@ AddFunction OutlawPrecombatMainActions
  #stealth,if=(!equipped.pocketsized_computation_device|!cooldown.cyclotronic_blast.duration|raid_event.invulnerable.exists)
  if not HasEquippedItem(pocket_sized_computation_device_item) or not SpellCooldownDuration(cyclotronic_blast) or 0 Spell(stealth)
  #roll_the_bones,precombat_seconds=2
- Spell(roll_the_bones)
+ if BuffRemaining(roll_the_bones_buff) <= 3 or rtb_reroll() Spell(roll_the_bones)
  #slice_and_dice,precombat_seconds=2
- Spell(slice_and_dice)
+ if BuffRemaining(slice_and_dice_buff) < target.TimeToDie() and BuffRemaining(slice_and_dice_buff) < { 1 + ComboPoints() } * 1.8 Spell(slice_and_dice)
 }
 
 AddFunction OutlawPrecombatMainPostConditions
