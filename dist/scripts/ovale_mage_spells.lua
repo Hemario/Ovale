@@ -469,6 +469,10 @@ Define(arcane_charge_debuff 36032)
 Define(arcane_power_buff 12042)
 	SpellInfo(arcane_power_buff duration=15)
 
+Define(arcane_familiar_buff 210126)
+    SpellInfo(arcane_familiar_buff duration=3600)
+    SpellRequire(arcane_familiar unusable 1=buff,arcane_familiar_buff)
+    
 Define(blazing_speed 108843)
 	SpellInfo(blazing_speed cd=25 gcd=0 offgcd=1)
 
@@ -657,9 +661,6 @@ Define(shimmer 212653)
 	SpellInfo(shimmer cd=20 charges=2)
 
 Define(spellsteal 30449)
-Define(summon_arcane_familiar 205022)
-	SpellInfo(summon_arcane_familiar cd=10)
-
 Define(t18_class_trinket 124516)
 Define(temporal_displacement_debuff 80354)
 	SpellInfo(temporal_displacement_debuff duration=600)
