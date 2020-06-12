@@ -461,18 +461,14 @@ Define(arcane_charge_debuff 36032)
 
     SpellAddBuff(arcane_explosion clearcasting_buff=-1)
     SpellAddBuff(arcane_missiles clearcasting_buff=-1)
-
-	SpellInfo(arcane_orb cd=15)
-
-	SpellInfo(arcane_power cd=90 gcd=0)
-	SpellAddBuff(arcane_power arcane_power_buff=1)
-Define(arcane_power_buff 12042)
-	SpellInfo(arcane_power_buff duration=15)
-
 Define(arcane_familiar_buff 210126)
     SpellInfo(arcane_familiar_buff duration=3600)
     SpellRequire(arcane_familiar unusable 1=buff,arcane_familiar_buff)
     
+	SpellAddBuff(arcane_power arcane_power_buff=1)
+Define(arcane_power_buff 12042)
+	SpellInfo(arcane_power_buff duration=15)
+
 Define(blazing_speed 108843)
 	SpellInfo(blazing_speed cd=25 gcd=0 offgcd=1)
 
