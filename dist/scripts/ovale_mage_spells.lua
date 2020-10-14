@@ -647,9 +647,9 @@ Define(quickening_buff 198924)
 
 	SpellInfo(ray_of_frost cd=60 channel=10 tag=main)
 
-	SpellInfo(rune_of_power buff_totem=rune_of_power_buff duration=180 max_totems=1 totem=1)
-	SpellAddBuff(rune_of_power ice_floes_buff=0 if_spell=ice_floes)
 Define(rune_of_power_buff 116014)
+	SpellInfo(rune_of_power buff_totem=rune_of_power_buff duration=180 max_totems=1 totem=1)
+    SpellRequire(rune_of_power unusable 1=buff,rune_of_power_buff)
 
 	SpellInfo(scorch travel_time=1)
 Define(shard_of_the_exodar_warp 207970)
