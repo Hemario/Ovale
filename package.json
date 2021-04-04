@@ -1,6 +1,6 @@
 {
     "name": "ovale",
-    "version": "9.0.47",
+    "version": "9.0.48",
     "description": "Show the icon of the next spell to cast",
     "main": "dist/index.js",
     "scripts": {
@@ -83,7 +83,7 @@
     "lua": {
         "name": "Ovale",
         "title": "Ovale Spell Priority",
-        "interface": "90002",
+        "interface": "90005",
         "savedVariables": "OvaleDB"
     },
     "husky": {
