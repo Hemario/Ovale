@@ -902,107 +902,109 @@ export const enum SpellAttributes {
 export interface SpellData {
     name: string;
     id: number;
-    /** 3 Hotfix bitmap
+    /** Hotfix bitmap
     Each field points to a field in this struct, starting from
     the first field. The most significant bit
     (0x8000 0000 0000 0000) indicates the presence of hotfixed
     effect data for this spell.*/
     //hotfix: number;
-    /** 4 Projectile Speed */
+    /** Projectile Speed */
     prj_speed: number;
-    /** 5 Spell school mask */
+    prj_delay: number;
+    prj_min_duration: number;
+    /** Spell school mask */
     school: number;
-    /** 6 Class mask for spell */
+    /** Class mask for spell */
     class_mask: number;
-    /** 7 Racial mask for the spell */
+    /** Racial mask for the spell */
     race_mask: number;
-    /** 8 Array index for gtSpellScaling.dbc. -1 means the first non-class-specific sub array, and so on, 0 disabled */
+    /** Array index for gtSpellScaling.dbc. -1 means the first non-class-specific sub array, and so on, 0 disabled */
     scaling_type: number;
-    /** 9 Max scaling level(?), 0 == no restrictions, otherwise min( player_level, max_scaling_level ) */
+    /** Max scaling level(?), 0 == no restrictions, otherwise min( player_level, max_scaling_level ) */
     max_scaling_level: number;
-    /** 10 Spell learned on level. NOTE: Only accurate for "class abilities" */
+    /** Spell learned on level. NOTE: Only accurate for "class abilities" */
     spell_level: number;
-    /** 11 Maximum level for scaling */
+    /** Maximum level for scaling */
     max_level: number;
     // SpellRange.dbc
-    /** 12 Minimum range in yards */
+    /** Minimum range in yards */
     min_range: number;
-    /** 13 Maximum range in yards */
+    /** Maximum range in yards */
     max_range: number;
     // SpellCooldown.dbc
-    /** 14 Cooldown in milliseconds */
+    /** Cooldown in milliseconds */
     cooldown: number;
-    /** 15 GCD in milliseconds */
+    /** GCD in milliseconds */
     gcd: number;
-    /** 16 Category cooldown in milliseconds */
+    /** Category cooldown in milliseconds */
     category_cooldown: number;
     // SpellCategory.dbc
-    /** 17 Number of charges */
+    /** Number of charges */
     charges: number;
-    /** 18 Cooldown duration of charges */
+    /** Cooldown duration of charges */
     charge_cooldown: number;
     // SpellCategories.dbc
-    /** 19 Spell category (for shared cooldowns, effects?) */
+    /** Spell category (for shared cooldowns, effects?) */
     category: number;
     // SpellDuration.dbc
-    /** 20 Spell duration in milliseconds */
+    /** Spell duration in milliseconds */
     duration: number;
     // SpellAuraOptions.dbc
-    /** 21 Maximum stack size for spell */
+    /** Maximum stack size for spell */
     max_stack: number;
-    /** 22 Spell proc chance in percent */
+    /** Spell proc chance in percent */
     proc_chance: number;
-    /**  23 Per proc charge amount */
+    /** Per proc charge amount */
     proc_charges: number;
-    /** 24 Proc flags */
+    /** Proc flags */
     proc_flags: number;
-    /** 25 ICD */
+    /** ICD */
     internal_cooldown: number;
-    /** 26 Base real procs per minute */
+    /** Base real procs per minute */
     rppm: number;
     // SpellEquippedItems.dbc
-    /** 27  */
+    /** */
     equipped_class: number;
-    /** 28 */
+    /** */
     equipped_invtype_mask: number;
-    /** 29 */
+    /** */
     equipped_subclass_mask: number;
     // SpellScaling.dbc
     // SpecializationSpells.dbc
     // Spell.dbc flags
-    /** // 35 Spell.dbc "flags", record field 1..10, note that 12694 added a field here after flags_7 */
+    /** Spell.dbc "flags", record field 1..10, note that 12694 added a field here after flags_7 */
     attributes: number[];
-    /** 36 SpellClassOptions.dbc flags */
+    /** SpellClassOptions.dbc flags */
     class_flags: number[];
-    /** 37 SpellClassOptions.dbc spell family */
+    /** SpellClassOptions.dbc spell family */
     class_flags_family: number;
     // SpellShapeshift.db2
-    /** 38 Stance mask (used only for druid form restrictions?) */
+    /** Stance mask (used only for druid form restrictions?) */
     stance_mask: number;
     // SpellMechanic.db2
-    /** 39 */
+    /** */
     mechanic: number;
-    /** 40 Azerite power id */
+    /** Azerite power id */
     power_id: number;
     essence_id: number;
     // Textual data
-    /** 42 Spell.dbc description stringblock */
+    /** Spell.dbc description stringblock */
     desc: string | undefined;
-    /** 43 Spell.dbc tooltip stringblock */
+    /** Spell.dbc tooltip stringblock */
     tooltip: string;
     // SpellDescriptionVariables.dbc
-    /** 44 Spell description variable stringblock, if present */
+    /** Spell description variable stringblock, if present */
     desc_vars: string;
     // SpellIcon.dbc
-    /** 45 */
+    /** */
     rank_str: string;
     cast_time: number;
     dmg_class: number;
     max_targets: number;
 
-    /** 46 */
+    /** */
     req_max_level: number;
-    /** 46 SpellCategories.db2 classification for the spell */
+    /** SpellCategories.db2 classification for the spell */
     //dmg_class: number;
 
     shapeshifts?: SpellShapeshift[];
@@ -1609,6 +1611,8 @@ export function getSpellData(directory: string) {
             id: getNumber(row, i++),
             school: getNumber(row, i++),
             prj_speed: getNumber(row, i++),
+            prj_delay: getNumber(row, i++),
+            prj_min_duration_kevin: getNumber(row, i++),
             race_mask: getNumber(row, i++),
             class_mask: getNumber(row, i++),
             scaling_type: getNumber(row, i++),

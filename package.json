@@ -7,7 +7,7 @@
         "test": "jest",
         "prepare": "tstolua -p tsconfig.lua.json",
         "prepare-tools": "tsc",
-        "simc": "node dist/src/utils/importsimc/index.js ../../simc",
+        "simc": "node dist/src/utils/importsimc/index.js ../simc \"T26_Mage_Arcane.simc\"",
         "dbc": "node dist/src/utils/dbc.js",
         "watch": "tstolua -p tsconfig.lua.json -w",
         "watch-tools": "tsc -w",

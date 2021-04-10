@@ -41,6 +41,8 @@ function createFakeSpell(
         min_range: 0,
         power_id: 0,
         prj_speed: 0,
+        prj_delay: 0,
+        prj_min_duration: 0,
         proc_chance: 0,
         proc_charges: 0,
         proc_flags: 0,
